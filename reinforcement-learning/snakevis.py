@@ -33,7 +33,7 @@ class SnakeVisual:
         self.screen.fill(self.bkg_color)
         self.running = True
 
-    def generate_food(self):
+    def generate_food(self): 
         while True:
             food_x = random.randint(1, self.grid_size - 2)
             food_y = random.randint(1, self.grid_size - 2)
@@ -80,7 +80,7 @@ class SnakeVisual:
             self.food_eaten = True
             self.score += 1
             self.generate_food()
-            return 50
+            return 100
         else:
             self.snake.pop()
             # reward for each step survived

@@ -20,9 +20,9 @@ class GameAgent:
     def __init__(self, state_size, action_size, alpha=0.1, gamma=0.9, epsilon=0.1, replay_buffer_size=1000, batch_size=32):
             self.state_size = state_size
             self.action_size = action_size
-            self.alpha = alpha  # Learning rate
-            self.gamma = gamma  # Discount factor
-            self.epsilon = epsilon  # Exploration rate
+            self.alpha = alpha
+            self.gamma = gamma 
+            self.epsilon = epsilon
             self.q_table = np.zeros(state_size + (action_size,))
             self.actions = ['UP', 'DOWN', 'LEFT', 'RIGHT']
             self.replay_buffer = ExperienceReplayBuffer(replay_buffer_size)
@@ -59,6 +59,7 @@ class GameAgent:
 
     def choose_action(self, state):
         state_idx = tuple(int(s) for s in state)
+        # if smaller than epsilon, explore (random), otherwise exploit
         if random.uniform(0, 1) < self.epsilon:
             action = random.choice(range(self.action_size))
             return action
@@ -106,11 +107,11 @@ class GameAgent:
 if __name__ == "__main__":
     grid_size = 10
     cell_size = 20
-    state_size = (3, 3, grid_size, grid_size, grid_size, grid_size, 2, 2, 2, 2)  # new state size
+    state_size = (3, 3, grid_size, grid_size, grid_size, grid_size, 2, 2, 2, 2)
     action_size = 4  # ['UP', 'DOWN', 'LEFT', 'RIGHT']
 
     game = sv.SnakeVisual(grid_size=grid_size, cell_size=cell_size)
-    agent = GameAgent(state_size, action_size, alpha=0.2, gamma=0.9, epsilon=0.2)
+    agent = GameAgent(state_size, action_size, alpha=0.15, gamma=0.8, epsilon=0.2)
 
     agent.train(game, episodes=5000)
 
