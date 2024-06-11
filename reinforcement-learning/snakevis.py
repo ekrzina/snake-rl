@@ -73,16 +73,18 @@ class SnakeVisual:
         # collision check
         if new_head in self.snake[1:] or new_head[0] <= 0 or new_head[0] >= self.grid_size - 1 or new_head[1] <= 0 or new_head[1] >= self.grid_size - 1:
             self.game_over()
-            return -10
+            return -50
 
         self.snake.insert(0, new_head)
         if new_head == self.food_position:
             self.food_eaten = True
+            self.score += 1
             self.generate_food()
-            return 10
+            return 50
         else:
             self.snake.pop()
-            return 0
+            # reward for each step survived
+            return 1
 
     def check_food_collision(self):
         if self.snake[0] == self.food_position:
