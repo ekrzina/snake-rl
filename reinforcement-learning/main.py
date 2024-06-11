@@ -114,5 +114,5 @@ if __name__ == "__main__":
     agent = GameAgent(state_size, action_size, alpha=0.15, gamma=0.8, epsilon=0.2)
 
     agent.train(game, episodes=5000)
-
+    np.save('q_table.npy', agent.q_table)
     pygame.quit()
