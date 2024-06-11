@@ -8,7 +8,7 @@ class SnakeVisual:
         self.bkg_color = (161, 219, 192)
         self.agt_color = (0, 0, 0)
         self.grid_color = (255, 255, 255)
-
+        self.current_direction = 'RIGHT'
         self.food_position = None
         self.food_positions = []
         self.food_position_recovery = []
@@ -38,7 +38,7 @@ class SnakeVisual:
         self.screen.fill(self.bkg_color)
         self.running = True
 
-        np.random.seed(1310)
+        np.random.seed(967)
         while len(self.food_positions) <= 50:
             food_x = np.random.randint(1, self.grid_size - 1)
             food_y = np.random.randint(1, self.grid_size - 1)
@@ -74,6 +74,9 @@ class SnakeVisual:
             pygame.draw.rect(self.screen, self.agt_color, (segment[0] * self.cell_size, segment[1] * self.cell_size, self.cell_size, self.cell_size))
 
     def move_snake(self, direction):
+        # Update the current direction
+        self.current_direction = direction
+        
         head = self.snake[0]
         if direction == 'UP':
             new_head = (head[0], head[1] - 1)
@@ -88,7 +91,7 @@ class SnakeVisual:
         if new_head in self.snake[1:] or new_head[0] <= 0 or new_head[0] >= self.grid_size - 1 or new_head[1] <= 0 or new_head[1] >= self.grid_size - 1:
             self.game_over()
             return -50
-
+        
         if new_head == tuple(self.food_position):
             self.food_eaten = True
             self.score += 1
@@ -100,6 +103,7 @@ class SnakeVisual:
             self.snake.pop()
             # reward for each step survived
             return 1
+
 
     def check_food_collision(self):
         if self.snake[0] == self.food_position:

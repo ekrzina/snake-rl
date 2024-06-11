@@ -111,7 +111,7 @@ if __name__ == "__main__":
     action_size = 4  # ['UP', 'DOWN', 'LEFT', 'RIGHT']
 
     game = sv.SnakeVisual(grid_size=grid_size, cell_size=cell_size)
-    agent = GameAgent(state_size, action_size, alpha=0.1, gamma=0.8, epsilon=0.3)
+    agent = GameAgent(state_size, action_size, alpha=0.08, gamma=0.8, epsilon=0.3)
 
     agent.train(game, episodes=1000)
 
